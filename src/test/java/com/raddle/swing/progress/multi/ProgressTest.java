@@ -10,6 +10,7 @@ import javax.swing.JDesktopPane;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 
 import com.raddle.swing.progress.Progress;
@@ -19,7 +20,15 @@ import com.raddle.swing.progress.FrameUtils;
 import com.raddle.swing.progress.single.ProgressCallback;
 
 public class ProgressTest extends javax.swing.JFrame {
-
+    {
+        // Set Look & Feel
+        try {
+            javax.swing.UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
     private static final long serialVersionUID = 1L;
     private JDesktopPane jDesktopPane1;
     private JButton      jButton1;
