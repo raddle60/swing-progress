@@ -13,13 +13,14 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 
+import com.raddle.swing.progress.FrameUtils;
 import com.raddle.swing.progress.Progress;
 import com.raddle.swing.progress.ProgressContext;
 import com.raddle.swing.progress.ProgressUtils;
-import com.raddle.swing.progress.FrameUtils;
 import com.raddle.swing.progress.single.ProgressCallback;
 
 public class ProgressTest extends javax.swing.JFrame {
+
     {
         // Set Look & Feel
         try {
@@ -28,11 +29,11 @@ public class ProgressTest extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-    
+
     private static final long serialVersionUID = 1L;
     private JDesktopPane jDesktopPane1;
-    private JButton      jButton1;
-    private JButton      jButton2;
+    private JButton jButton1;
+    private JButton jButton2;
 
     /**
      * Auto-generated main method to display this JFrame
@@ -40,6 +41,7 @@ public class ProgressTest extends javax.swing.JFrame {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
 
+            @Override
             public void run() {
                 ProgressTest inst = new ProgressTest();
                 inst.setLocationRelativeTo(null);
@@ -66,8 +68,9 @@ public class ProgressTest extends javax.swing.JFrame {
                     jButton1.setBounds(17, 12, 106, 23);
                     jButton1.addActionListener(new ActionListener() {
 
+                        @Override
                         public void actionPerformed(ActionEvent evt) {
-                            ProgressUtils.doInMultiProgress(FrameUtils.getFrame((JComponent) evt.getSource()), "测试多进度条", 3, new MultiProgressCallback() {
+                            ProgressUtils.doInMultiProgress(FrameUtils.getFrame((JComponent) evt.getSource()), "测试多进度条", 3, 2000, new MultiProgressCallback() {
 
                                 @Override
                                 public void doWithMultiProgress(ProgressContext context) {
@@ -104,8 +107,9 @@ public class ProgressTest extends javax.swing.JFrame {
                     jButton2.setBounds(17, 46, 106, 23);
                     jButton2.addActionListener(new ActionListener() {
 
+                        @Override
                         public void actionPerformed(ActionEvent evt) {
-                            ProgressUtils.doInProgress(FrameUtils.getFrame((JComponent) evt.getSource()), "测试单度条", new ProgressCallback() {
+                            ProgressUtils.doInProgress(FrameUtils.getFrame((JComponent) evt.getSource()), "测试单度条", 200, new ProgressCallback() {
 
                                 @Override
                                 public void doWithProgress(JDialog dialog, Progress progress) {
