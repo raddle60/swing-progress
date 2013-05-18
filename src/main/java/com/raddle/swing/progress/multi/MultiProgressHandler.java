@@ -48,10 +48,7 @@ public class MultiProgressHandler {
             };
         };
         t.start();
-        int ownerCenterX = owner.getLocation().x + owner.getSize().width / 2;
-        int ownerCenterY = owner.getLocation().y + owner.getSize().height / 2;
-        // 在窗口中间显示
-        dialog.setLocation(Math.max(ownerCenterX - dialog.getWidth() / 2, 0), Math.max(ownerCenterY - dialog.getHeight() / 2, 0));
+        dialog.setLocationRelativeTo(owner);
         if (delayShow > 0) {
             // 延迟显示
             new Thread() {
