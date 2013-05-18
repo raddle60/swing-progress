@@ -70,7 +70,7 @@ public class ProgressTest extends javax.swing.JFrame {
 
                         @Override
                         public void actionPerformed(ActionEvent evt) {
-                            ProgressUtils.doInMultiProgress(FrameUtils.getFrame((JComponent) evt.getSource()), "测试多进度条", 3, 2000, new MultiProgressCallback() {
+                            ProgressUtils.doInMultiProgress(null, "测试多进度条", 3, 2000, new MultiProgressCallback() {
 
                                 @Override
                                 public void doWithMultiProgress(ProgressContext context) {
