@@ -7,7 +7,6 @@ import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JDesktopPane;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
@@ -26,7 +25,6 @@ public class MultiProgressDialogs extends javax.swing.JDialog {
     private final static int leftPad        = 35;
     private final static int rigthPad       = 50;
     private static int       progressHeigth = 50;
-    private JDesktopPane     jDesktopPane;
     private int              progressCount;
     private List<Progress>   progressList   = new ArrayList<Progress>();
 
@@ -44,25 +42,23 @@ public class MultiProgressDialogs extends javax.swing.JDialog {
 
     private void initGUI() {
         try {
-            BorderLayout thisLayout = new BorderLayout();
-            getContentPane().setLayout(thisLayout);
+            getContentPane().setLayout(null);
             {
-                jDesktopPane = new JDesktopPane();
-                getContentPane().add(jDesktopPane, BorderLayout.CENTER);
                 for (int i = 0; i < progressCount; i++) {
                     JLabel jLabel = new JLabel();
-                    jDesktopPane.add(jLabel, BorderLayout.CENTER);
+                    getContentPane().add(jLabel, BorderLayout.CENTER);
                     jLabel.setFont(new java.awt.Font("黑体", 0, 16));
                     jLabel.setHorizontalAlignment(SwingConstants.CENTER);
                     // /////////////
                     JProgressBar jProgressBar = new JProgressBar();
                     jProgressBar.setStringPainted(true);
-                    jDesktopPane.add(jProgressBar, BorderLayout.NORTH);
+                    getContentPane().add(jProgressBar, BorderLayout.NORTH);
                     // ///
                     progressList.add(new Progress(jLabel, jProgressBar));
                     //
-                    jDesktopPane.addComponentListener(new ComponentAdapter() {
+                    getContentPane().addComponentListener(new ComponentAdapter() {
 
+                        @Override
                         public void componentResized(ComponentEvent evt) {
                             resetSize();
                         }
@@ -77,7 +73,7 @@ public class MultiProgressDialogs extends javax.swing.JDialog {
     }
 
     private void resetSize() {
-        progressHeigth = (int) ((this.getHeight() - rigthPad - progressCount * labelHeigth) / progressCount);
+        progressHeigth = (this.getHeight() - rigthPad - progressCount * labelHeigth) / progressCount;
         for (int i = 0; i < progressCount; i++) {
             Progress p = progressList.get(i);
             p.getLabel().setBounds(10, i * (labelHeigth + progressHeigth), this.getWidth() - leftPad, labelHeigth);
