@@ -4,10 +4,8 @@ import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
-
-import org.omg.CORBA.BooleanHolder;
+import javax.swing.WindowConstants;
 
 import com.raddle.swing.progress.ProgressContext;
 
@@ -19,15 +17,16 @@ import com.raddle.swing.progress.ProgressContext;
 public class MultiProgressHandler {
 
     public static void doInMultiProgress(final Frame owner, final String title, final int progressCount, final int delayShow, final MultiProgressCallback callback) {
-        final BooleanHolder isFinshed = new BooleanHolder(false);
+        final boolean[] isFinshed = new boolean[1];
+        isFinshed[0] = false;
         final MultiProgressDialogs dialog = new MultiProgressDialogs(owner, progressCount, true);
         dialog.setTitle(title);
-        dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+        dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         dialog.addWindowListener(new WindowAdapter() {
 
             @Override
             public void windowClosing(WindowEvent e) {
-                if (isFinshed.value) {
+                if (isFinshed[0]) {
                     dialog.dispose();
                 } else {
                     JOptionPane.showMessageDialog(dialog, "正在执行中，不能关闭", "关闭进度条", JOptionPane.WARNING_MESSAGE);
@@ -42,7 +41,7 @@ public class MultiProgressHandler {
                 try {
                     callback.doWithMultiProgress(p);
                 } finally {
-                    isFinshed.value = true;
+                    isFinshed[0] = true;
                 }
                 dialog.dispose();
             };
@@ -65,7 +64,7 @@ public class MultiProgressHandler {
                         }
                     }
                     // 在等待的过程中，可能已经执行完成，或调用了dispose
-                    if (!isFinshed.value) {
+                    if (!isFinshed[0]) {
                         dialog.setVisible(true);
                     }
                 }
